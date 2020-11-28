@@ -1,22 +1,15 @@
-import { ReactNode } from "react"
-import { Head } from "blitz"
+import React from "react";
+import Footer from "./Footer";
+import Header from "./Header";
 
-type LayoutProps = {
-  title?: string
-  children: ReactNode
-}
+const Layout = (props: { children: React.ReactNode }) => (
+  <>
+    <div className="bg-gray-100">
+      <Header />
+      <div className="container min-h-screen my-4">{props.children}</div>
+      <Footer />
+    </div>
+  </>
+);
 
-const Layout = ({ title, children }: LayoutProps) => {
-  return (
-    <>
-      <Head>
-        <title>{title || "events"}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      {children}
-    </>
-  )
-}
-
-export default Layout
+export default Layout;
