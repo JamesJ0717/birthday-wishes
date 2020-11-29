@@ -65,7 +65,7 @@ function Create() {
             value="Create"
           ></input>
           <div className="w-5/12 rounded-3xl border border-blue-200 bg-gray-200">
-            <a href="#" onClick={() => router.push(`/`)}>
+            <a href="#" onClick={() => router.push(`/${uuid}`)}>
               Cancel
             </a>
           </div>
