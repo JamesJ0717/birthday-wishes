@@ -1,55 +1,75 @@
-import { useMutation, useRouter } from "blitz";
+import { useRouter, useMutation, useQuery, useParams } from "blitz";
 import React, { useState } from "react";
+import { v4 as UUID } from "uuid";
+
 import createEvent from "app/events/mutations/createEvent";
 
 function Create() {
   const router = useRouter();
+
   const [name, setName] = useState("");
-  const [creator, setCreator] = useState("");
   const [recipient, setRecipient] = useState("");
+  const [creator, setCreator] = useState("");
 
   const [createEventMutation] = useMutation(createEvent);
+
+  let uuid = UUID();
 
   return (
     <div>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
+          console.log({ uuid, name, recipient, creator });
 
           await createEventMutation({
             data: {
+              uuid,
               name,
-              creator,
               recipient,
-              cards: { create: { author: "", content: "", title: "", picture: "" } },
+              creator,
             },
           });
           router.push(`/`);
         }}
+        className="grid space-y-4 text-2xl"
       >
         <h1>Create Submission</h1>
         <input
+          className="border border-gray-200 rounded-2xl p-2"
           onChange={(e) => setName(e.target.value)}
-          placeholder="name"
+          placeholder="Title"
           type="text"
           value={name}
         />
         <input
+          className="border border-gray-200 rounded-2xl p-2"
           onChange={(e) => setRecipient(e.target.value)}
-          placeholder="recipient"
+          placeholder="Recipient"
           type="text"
           value={recipient}
         />
         <input
+          className="border border-gray-200 rounded-2xl p-2"
           onChange={(e) => setCreator(e.target.value)}
-          placeholder="creator"
+          placeholder="Creator"
           type="text"
           value={creator}
         />
-        <input disabled={!creator || !name || !recipient} type="submit" value="Create" />
-        <a className="back" href="#" onClick={() => router.push(`/`)}>
-          or Cancel
-        </a>
+
+        <div className="w-full flex space-x-4 text-center justify-center">
+          <input
+            className="w-5/12 rounded-3xl border border-blue-200 bg-gray-200"
+            disabled={!creator || !name || !recipient}
+            type="submit"
+            value="Create"
+          ></input>
+          <div className="w-5/12 rounded-3xl border border-blue-200 bg-gray-200">
+            <a href="#" onClick={() => router.push(`/`)}>
+              Cancel
+            </a>
+          </div>
+        </div>
       </form>
     </div>
   );

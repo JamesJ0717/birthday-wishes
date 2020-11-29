@@ -1,10 +1,10 @@
-import { useParams, useQuery } from "blitz";
+import { Link, useParams, useQuery } from "blitz";
 import React from "react";
 import getCards from "app/cards/queries/getCards";
 import getEvent from "app/events/queries/getEvent";
 
 const Card = ({ card }) => (
-  <div className="rounded-2xl border border-black shadow-xl p-4 space-y-4">
+  <div className="rounded-2xl border border-black shadow-2xl bg-gray-100 p-4 space-y-4">
     <div className="text-4xl">{card.title}</div>
     <hr />
     <div className="text-3xl text-center">{card.content}</div>
@@ -16,16 +16,16 @@ const Card = ({ card }) => (
 const Event = () => {
   const params = useParams();
   console.log({ params });
-  let eventId = params.id !== undefined && !Array.isArray(params.id) ? parseInt(params.id) : 0;
-  console.log({ eventId });
+  let eventUUID = params.id && !Array.isArray(params.id) ? params.id : "";
+  console.log({ eventUUID });
 
   const [cards] = useQuery(getCards, {
-    where: { eventId: eventId },
+    where: { eventUUID: eventUUID },
     orderBy: { createdAt: "desc" },
   });
 
   const [event] = useQuery(getEvent, {
-    where: { id: eventId },
+    where: { uuid: eventUUID },
   });
 
   console.log({ cards: cards.cards, event: event });
@@ -40,6 +40,15 @@ const Event = () => {
             <Card card={card} />
           </div>
         ))}
+      </div>
+      <div className="justify-center">
+        <div className="object-center w-1/2 rounded-2xl border border-black shadow-2xl p-4 space-y-4 text-center">
+          <Link href="/[id]/create" as={`/${eventUUID}/create`}>
+            <a>
+              <div className="text-4xl">+ Create a New Card</div>
+            </a>
+          </Link>
+        </div>
       </div>
     </div>
   );

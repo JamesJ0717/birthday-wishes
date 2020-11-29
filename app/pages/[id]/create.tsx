@@ -1,5 +1,6 @@
 import { useRouter, useMutation, useQuery, useParams } from "blitz";
 import React, { useState } from "react";
+import { v4 as UUID } from "uuid";
 
 import createCard from "app/cards/mutations/createCard";
 import getEvent from "app/events/queries/getEvent";
@@ -7,7 +8,7 @@ import getEvent from "app/events/queries/getEvent";
 function Create() {
   const router = useRouter();
   const params = useParams();
-  const eventId = params.id !== undefined && !Array.isArray(params.id) ? parseInt(params.id) : 0;
+  const eventUUID = params.id !== undefined && !Array.isArray(params.id) ? params.id : "";
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -15,9 +16,11 @@ function Create() {
   const [picture] = useState("");
 
   const [createCardMutation] = useMutation(createCard);
-  const [event] = useQuery(getEvent, { where: { id: eventId } });
+  const [event] = useQuery(getEvent, { where: { uuid: eventUUID } });
 
-  console.log({ eventId, event: event });
+  console.log({ eventUUID, event: event });
+
+  let uuid = UUID();
 
   return (
     <div>
@@ -25,18 +28,19 @@ function Create() {
         onSubmit={async (e) => {
           e.preventDefault();
           let eventData = event;
-          console.log({ title, content, author, eventId, picture, eventData });
+          console.log({ uuid, title, content, author, eventUUID, picture, eventData });
 
           await createCardMutation({
             data: {
+              uuid,
               title,
               content,
               author,
               picture,
-              event: { connect: { id: eventId } },
+              event: { connect: { uuid: eventUUID } },
             },
           });
-          router.push(`/${eventId}`);
+          router.push(`/${eventUUID}`);
         }}
         className="grid space-y-4 text-2xl"
       >
@@ -71,11 +75,13 @@ function Create() {
             type="submit"
             value="Create"
           ></input>
-          <div className="w-5/12 rounded-3xl border border-blue-200 bg-gray-200">
-            <a href="#" onClick={() => router.push(`/${eventId}`)}>
-              Cancel
-            </a>
-          </div>
+          <a
+            className="w-5/12 rounded-3xl border border-blue-200 bg-gray-200"
+            href="#"
+            onClick={() => router.push(`/${eventUUID}`)}
+          >
+            <div>Cancel</div>
+          </a>
         </div>
       </form>
     </div>

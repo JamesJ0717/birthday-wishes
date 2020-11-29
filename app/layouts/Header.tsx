@@ -11,26 +11,19 @@ const Header = () => {
 
   return (
     <nav className="flex justify-between bg-blue-500 p-4 mb-4">
-      <div className="text-2xl">
+      <div> </div>
+      {/* <div className="text-2xl">
         <Link href="/">
           <a className="bold" data-active={isActive("/")}>
             Home
           </a>
         </Link>
+      </div> */}
+      <div className="text-2xl">
+        <Link href="/create">
+          <a className="bold">Create a New Event</a>
+        </Link>
       </div>
-      {id ? (
-        <div className="text-xl">
-          <Link href={`/${id}/create`}>
-            <a data-active={isActive(`/${id}/create`)}>Create New Card</a>
-          </Link>
-        </div>
-      ) : (
-        <div className="text-xl">
-          <Link href={`/create`}>
-            <a data-active={isActive("/create")}>Create New Event</a>
-          </Link>
-        </div>
-      )}
     </nav>
   );
 };
