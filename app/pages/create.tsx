@@ -30,7 +30,7 @@ function Create() {
               creator,
             },
           });
-          router.push(`/`);
+          router.push(`/${uuid}`);
         }}
         className="grid space-y-4 text-2xl"
       >
