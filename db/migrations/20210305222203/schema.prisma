@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+model Card {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  author    String
+  title     String
+  content   String
+  picture   String?
+  uuid      String  @unique
+  eventUUID String
+  event     Event    @relation(fields: [eventUUID], references: [uuid])
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name      String
+  creator   String
+  recipient String
+  uuid      String   @unique
+  cards     Card[]
+}

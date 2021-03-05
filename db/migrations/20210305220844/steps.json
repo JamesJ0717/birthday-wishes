@@ -1,0 +1,50 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Card",
+      "field": "eventId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Card",
+      "field": "eventUUID"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Card",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "newValue": "[eventId]"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Card",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "newValue": "[id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Event",
+      "field": "uuid"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ const Header = () => {
   }
 
   return (
-    <nav className="flex justify-between bg-blue-500 p-4 mb-4">
+    <nav className="flex justify-between bg-gray-600 p-4 mb-4">
       <div> </div>
       {/* <div className="text-2xl">
         <Link href="/">
@@ -19,9 +19,9 @@ const Header = () => {
           </a>
         </Link>
       </div> */}
-      <div className="text-2xl">
+      <div className="text-2xl text-primary">
         <Link href="/create">
-          <a className="bold">Create a New Event</a>
+          <a className="">Create a New Event</a>
         </Link>
       </div>
     </nav>

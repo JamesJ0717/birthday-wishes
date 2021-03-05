@@ -16,7 +16,7 @@ function Create() {
   let uuid = UUID();
 
   return (
-    <div>
+    <div className="px-64">
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -34,23 +34,23 @@ function Create() {
         }}
         className="grid space-y-4 text-2xl"
       >
-        <h1>Create Submission</h1>
+        <h1 className="text-secondary">Create New Event</h1>
         <input
-          className="border border-gray-200 rounded-2xl p-2"
+          className="border border-gray-200 rounded-2xl p-2 bg-gray-600"
           onChange={(e) => setName(e.target.value)}
           placeholder="Title"
           type="text"
           value={name}
         />
         <input
-          className="border border-gray-200 rounded-2xl p-2"
+          className="border border-gray-200 rounded-2xl p-2 bg-gray-600"
           onChange={(e) => setRecipient(e.target.value)}
           placeholder="Recipient"
           type="text"
           value={recipient}
         />
         <input
-          className="border border-gray-200 rounded-2xl p-2"
+          className="border border-gray-200 rounded-2xl p-2 bg-gray-600"
           onChange={(e) => setCreator(e.target.value)}
           placeholder="Creator"
           type="text"
@@ -65,7 +65,7 @@ function Create() {
             value="Create"
           ></input>
           <div className="w-5/12 rounded-3xl border border-blue-200 bg-gray-200">
-            <a href="#" onClick={() => router.push(`/${uuid}`)}>
+            <a href="#" onClick={() => router.back()}>
               Cancel
             </a>
           </div>
